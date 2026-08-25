@@ -5,7 +5,9 @@ import App from "./App.jsx";
 import "./index.css";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
+ <React.StrictMode>
+    <BrowserRouter basename="/HaloChats">
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
 );

@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import { AuthProvider } from "@/auth/AuthContext";
 import { RedirectIfAuthed, RequireAuth } from "@/auth/RouteGuards";
@@ -15,50 +15,57 @@ export default function App() {
   return (
     <AuthProvider>
       <ToastProvider>
-        <BrowserRouter>
-          {/* Needs router context (useNavigate) and auth context
-              (signOut), so it lives here rather than wrapping
-              BrowserRouter the way the other two providers do. */}
-          <SessionWatcher />
+        <SessionWatcher />
 
-          <Routes>
-            {/* --- Public --- */}
-            <Route
-              path="/"
-              element={
-                <RedirectIfAuthed>
-                  <LoginPage />
-                </RedirectIfAuthed>
-              }
-            />
-            <Route
-              path="/signup"
-              element={
-                <RedirectIfAuthed>
-                  <SignupPage />
-                </RedirectIfAuthed>
-              }
-            />
-            <Route path="/verify-otp" element={<VerifyOtpPage />} />
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Routes>
+          {/* Public */}
+          <Route
+            path="/"
+            element={
+              <RedirectIfAuthed>
+                <LoginPage />
+              </RedirectIfAuthed>
+            }
+          />
 
-            {/* --- Signed in --- */}
-            <Route
-              path="/app"
-              element={
-                <RequireAuth>
-                  <AppPage />
-                </RequireAuth>
-              }
-            />
+          <Route
+            path="/signup"
+            element={
+              <RedirectIfAuthed>
+                <SignupPage />
+              </RedirectIfAuthed>
+            }
+          />
 
-            {/* The old route, kept so existing bookmarks and the
-                links in previously-sent emails still land somewhere. */}
-            <Route path="/home" element={<Navigate to="/app" replace />} />
+          <Route path="/verify-otp" element={<VerifyOtpPage />} />
 
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </BrowserRouter>
+          <Route
+            path="/forgot-password"
+            element={<ForgotPasswordPage />}
+          />
+
+          {/* Signed in */}
+          <Route
+            path="/app"
+            element={
+              <RequireAuth>
+                <AppPage />
+              </RequireAuth>
+            }
+          />
+
+          {/* Old route */}
+          <Route
+            path="/home"
+            element={<Navigate to="/app" replace />}
+          />
+
+          {/* Unknown route */}
+          <Route
+            path="*"
+            element={<Navigate to="/" replace />}
+          />
+        </Routes>
       </ToastProvider>
     </AuthProvider>
   );

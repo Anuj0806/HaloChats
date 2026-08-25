@@ -9,7 +9,7 @@
 // about that failure; it happens before any chat logic runs. Set
 // VITE_API_HOST in a .env file for your own network rather than
 // relying on this fallback.
-export const API_HOST = import.meta.env.VITE_API_HOST || "halochatsbackend.onrender.com";
+export const API_HOST = import.meta.env.VITE_API_HOST || "halochatsbackendanuj.onrender.com";
 export const API_PORT = import.meta.env.VITE_API_PORT || "2000";
 
 export const API_BASE_PUBLIC = `https://${API_HOST}/public`;

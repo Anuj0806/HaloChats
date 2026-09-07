@@ -30,8 +30,8 @@ export const API_BASE = isProduction
 
 
 export const WS_URL = import.meta.env.PROD
-  ? "wss://${API_HOST}/ws"
-  : "ws://${API_HOST}:${API_PORT}/ws";
+  ? `${API_PROTOCOL}://${API_HOST}/ws`
+  : `${API_PROTOCOL}://${API_HOST}:${API_PORT}/ws`;
 
 // SECRET_KEY used to live here: a single AES key shared by every user,
 // committed to both repos and shipped in the JS bundle. It is gone.

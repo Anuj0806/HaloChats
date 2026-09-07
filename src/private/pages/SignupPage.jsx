@@ -16,12 +16,18 @@ const PHONE_PATTERN = /^\+?[0-9][0-9\s-]{6,17}$/;
 
 export default function SignupPage() {
   const navigate = useNavigate();
+ 
+  const generateOTP = () => {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+  };
+  //const otp = generateOTP();
 
   const [form, setForm] = useState({
     name: "",
     email: "",
     phoneNumber: "",
     city: "",
+    otp: generateOTP(),
     password: "",
     confirmPassword: "",
   });

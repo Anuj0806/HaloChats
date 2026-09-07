@@ -7,13 +7,18 @@ import api from "./api";
    payload shapes exist in exactly one place. Screens deal in
    plain arguments and never touch axios directly.
 ============================================================ */
+ const generateOTP = () => {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+  };
 
-export async function signup({ name, email, phoneNumber, city, password }) {
+
+export async function signup({ name, email, phoneNumber,otp, city, password }) {
   const { data } = await api.post("/api/auth/signup", {
     name: name.trim(),
     email: email.trim().toLowerCase(),
     phoneNumber: phoneNumber.trim(),
     city: (city || "").trim(),
+    otp:  otp,
     password,
   });
 
@@ -32,6 +37,7 @@ export async function verifySignupOtp({ email, otp }) {
 export async function resendSignupOtp(email) {
   const { data } = await api.post("/api/auth/sendEmailOTP", {
     email: email.trim().toLowerCase(),
+     otp:  generateOTP().trim(),
   });
 
   return data;

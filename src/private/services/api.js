@@ -1,17 +1,19 @@
 import axios from "axios";
-import { API_HOST, API_PORT } from "../constant/config.js";
+import { API_HOST, API_PORT, API_PROTOCOL } from "../constant/config.js";
 import { readStoredSession } from "../../auth/authStore.js";
 import { emitSessionExpired } from "./sessionEvents.js";
 
-const api = axios.create({
+const serverBaseURL = API_PORT
+  ? `${API_PROTOCOL}://${API_HOST}:${API_PORT}`
+  : `${API_PROTOCOL}://${API_HOST}`;
 
-  baseURL: `https://${API_HOST}`,                                  //:${API_PORT}`,
-// =======
-//   baseURL: `http://${API_HOST}:${API_PORT}`,
+const api = axios.create({
+  baseURL: serverBaseURL,
   headers: {
     "Content-Type": "application/json",
   },
 });
+
 
 /*
 Reads the token from the one real session record (authStore's

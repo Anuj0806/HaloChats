@@ -10,18 +10,28 @@
 // VITE_API_HOST in a .env file for your own network rather than
 // relying on this fallback.
 // <<<<<<< Updated upstream
-export const API_HOST = import.meta.env.VITE_API_HOST || "halochatsbackendanuj.onrender.com";
-// =======
-// export const API_HOST = import.meta.env.VITE_API_HOST || "192.168.8.41";
-// >>>>>>> Stashed changes
-// export const API_PORT = import.meta.env.VITE_API_PORT || "2000";
+const isProduction = import.meta.env.PROD;
 
-export const API_BASE_PUBLIC = `http://${API_HOST}:${API_PORT}/public`;
-export const API_BASE = `http://${API_HOST}:${API_PORT}/private`;
+export const API_HOST = isProduction
+  ? "halochatsbackend.onrender.com"
+  : "192.168.1.41";
 
-export const CHAT_TYPE_PUBLIC = "public";
-export const CHAT_TYPE_PRIVATE = "private";
-export const WS_URL = `http://${API_HOST}:${API_PORT}/ws`;
+export const API_PORT = isProduction ? "" : "2000";
+
+export const API_PROTOCOL = isProduction ? "https" : "http";
+
+export const API_BASE_PUBLIC = isProduction
+  ? `${API_PROTOCOL}://${API_HOST}/public`
+  : `${API_PROTOCOL}://${API_HOST}:${API_PORT}/public`;
+
+export const API_BASE = isProduction
+  ? `${API_PROTOCOL}://${API_HOST}/private`
+  : `${API_PROTOCOL}://${API_HOST}:${API_PORT}/private`;
+
+
+export const WS_URL = import.meta.env.PROD
+  ? `wss://${API_HOST}/ws`
+  : `ws://${API_HOST}:${API_PORT}/ws`;
 
 // SECRET_KEY used to live here: a single AES key shared by every user,
 // committed to both repos and shipped in the JS bundle. It is gone.

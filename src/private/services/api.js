@@ -4,7 +4,10 @@ import { readStoredSession } from "../../auth/authStore.js";
 import { emitSessionExpired } from "./sessionEvents.js";
 
 const api = axios.create({
+
   baseURL: `https://${API_HOST}`,                                  //:${API_PORT}`,
+// =======
+//   baseURL: `http://${API_HOST}:${API_PORT}`,
   headers: {
     "Content-Type": "application/json",
   },

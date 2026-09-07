@@ -9,15 +9,19 @@
 // about that failure; it happens before any chat logic runs. Set
 // VITE_API_HOST in a .env file for your own network rather than
 // relying on this fallback.
+// <<<<<<< Updated upstream
 export const API_HOST = import.meta.env.VITE_API_HOST || "halochatsbackendanuj.onrender.com";
-export const API_PORT = import.meta.env.VITE_API_PORT || "2000";
+// =======
+// export const API_HOST = import.meta.env.VITE_API_HOST || "192.168.8.41";
+// >>>>>>> Stashed changes
+// export const API_PORT = import.meta.env.VITE_API_PORT || "2000";
 
-export const API_BASE_PUBLIC = `https://${API_HOST}/public`;
-export const API_BASE = `https://${API_HOST}/private`;
+export const API_BASE_PUBLIC = `http://${API_HOST}:${API_PORT}/public`;
+export const API_BASE = `http://${API_HOST}:${API_PORT}/private`;
 
 export const CHAT_TYPE_PUBLIC = "public";
 export const CHAT_TYPE_PRIVATE = "private";
-export const WS_URL = `https://${API_HOST}/ws`;
+export const WS_URL = `http://${API_HOST}:${API_PORT}/ws`;
 
 // SECRET_KEY used to live here: a single AES key shared by every user,
 // committed to both repos and shipped in the JS bundle. It is gone.

@@ -1,5 +1,6 @@
 import api from "./api";
 
+import { sendOTPEmail } from "../services/emailService";
 /* ============================================================
    AUTH API
 
@@ -35,9 +36,13 @@ export async function verifySignupOtp({ email, otp }) {
 }
 
 export async function resendSignupOtp(email) {
+
+   const otp = generateOTP();
+   await sendOTPEmail(email, otp);
+
   const { data } = await api.post("/api/auth/sendEmailOTP", {
     email: email.trim().toLowerCase(),
-     otp:  generateOTP().trim(),
+     otp: otp,
   });
 
   return data;

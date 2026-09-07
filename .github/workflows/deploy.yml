@@ -55,6 +55,9 @@ jobs:
           VITE_API_HOST: ${{ vars.VITE_API_HOST }}
           VITE_API_PORT: ${{ vars.VITE_API_PORT }}
           VITE_SQL_WASM_URL: ${{ vars.VITE_SQL_WASM_URL }}
+          VITE_EMAILJS_SERVICE_ID: ${{ vars.VITE_EMAILJS_SERVICE_ID }}
+          VITE_EMAILJS_TEMPLATE_ID: ${{ vars.VITE_EMAILJS_TEMPLATE_ID }}
+          VITE_EMAILJS_PUBLIC_KEY: ${{ vars.VITE_EMAILJS_PUBLIC_KEY }}
 
       # --------------------------------
       # Create SPA fallback

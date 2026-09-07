@@ -11,6 +11,8 @@ import { scorePassword } from "@/lib/password";
 import { signup } from "../services/authService";
 import { readError } from "@/lib/format";
 
+import { sendOTPEmail } from "../services/emailService";
+
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE_PATTERN = /^\+?[0-9][0-9\s-]{6,17}$/;
 
@@ -20,14 +22,13 @@ export default function SignupPage() {
   const generateOTP = () => {
     return Math.floor(100000 + Math.random() * 900000).toString();
   };
-  //const otp = generateOTP();
+
 
   const [form, setForm] = useState({
     name: "",
     email: "",
     phoneNumber: "",
-    city: "",
-    otp: generateOTP(),
+    city: "",   
     password: "",
     confirmPassword: "",
   });
@@ -76,14 +77,35 @@ export default function SignupPage() {
 
     try {
       setLoading(true);
+      const otp = generateOTP();
+      
+      // Add OTP into form
+        const updatedForm = {
+          ...form,
+          otp: otp,
+        };
+
+        // Update React state
+        setForm(updatedForm);
+
+        console.log("Form with OTP:", updatedForm);
+
 
       // confirmPassword never leaves the browser - the server only
       // has one password field, and matching is a UI concern.
-      await signup(form);
+         // Send OTP through EmailJS
+        await sendOTPEmail(
+          updatedForm.email.trim().toLowerCase(),
+          updatedForm.otp
+        );
+        
+        // Signup with OTP included
+        await signup(updatedForm);
 
       navigate("/verify-otp", {
         replace: true,
-        state: { email: form.email.trim().toLowerCase(), name: form.name.trim() },
+        state: {  email: updatedForm.email.trim().toLowerCase(),
+                  name: updatedForm.name.trim() },
       });
     } catch (err) {
       setError(readError(err, "Couldn't create your account. Try again."));

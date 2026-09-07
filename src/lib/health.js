@@ -44,5 +44,5 @@ export async function pingServer() {
 }
 
 export function backendAddress() {
-  return `${API_HOST}:${API_PORT}`;
+  return `${API_HOST}`;
 }

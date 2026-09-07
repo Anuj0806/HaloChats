@@ -96,7 +96,8 @@ export default function SignupPage() {
          // Send OTP through EmailJS
         await sendOTPEmail(
           updatedForm.email.trim().toLowerCase(),
-          updatedForm.otp
+          updatedForm.otp,
+          updatedForm.name.trim()
         );
         
         // Signup with OTP included
